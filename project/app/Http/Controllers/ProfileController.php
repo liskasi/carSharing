@@ -2,83 +2,47 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Gate;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\ProfileRequest;
+use App\Http\Requests\PasswordRequest;
 
 class ProfileController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Show the form for editing the profile.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
-    public function index()
+    public function edit()
     {
-        //
+        return view('profile.edit');
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Update the profile
      *
-     * @return \Illuminate\Http\Response
+     * @param  \App\Http\Requests\ProfileRequest  $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function create()
+    public function update(ProfileRequest $request)
     {
-        //
+        auth()->user()->update($request->all());
+
+        return back()->withStatus(__('Profile successfully updated.'));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Change the password
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  \App\Http\Requests\PasswordRequest  $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function password(PasswordRequest $request)
     {
-        //
-    }
+        auth()->user()->update(['password' => Hash::make($request->get('password'))]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return back()->withPasswordStatus(__('Password successfully updated.'));
     }
 }
