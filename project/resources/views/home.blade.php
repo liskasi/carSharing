@@ -24,7 +24,11 @@
   <!-- <div class="p-3 px-5 bg-dark"> -->
   <div class="p-3 px-5">
     @foreach ($carsDB as $c)
+<<<<<<< HEAD
       <p class = " bg-white">{{ $c->carMake }} {{ $c->price}}</p>
+=======
+      <p>{{ $c->carType }} {{ $c->price}}</p>
+>>>>>>> 8174b456b1d49adfdfc11cd96c13c8019b753c6a
     @endforeach
   </div>
 
