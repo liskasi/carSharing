@@ -36,6 +36,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 	Route::get('{page}', ['as' => 'page.index', 'uses' => 'App\Http\Controllers\PageController@index']);
-    // Route::post('/register', 'Auth\RegisterController@register')->name('register');
+	Route::put('car', ['as' => 'car.store', 'uses' => 'App\Http\Controllers\CarController@store']);
 });
+
 

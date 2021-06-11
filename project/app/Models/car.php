@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class car extends Model
 {
     use HasFactory;
-    protected $fillable=['carType','price','documents', 'desciption', 'carArea']; 
+    protected $fillable=['carMake', 'carModel', 'PhoneNumber', 'price', 'username', 'documents', 'description', 'carArea', 'photo']; 
     public function user()
     {
         return $this->belongsTo(User::class);

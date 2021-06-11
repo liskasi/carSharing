@@ -24,7 +24,7 @@
   <!-- <div class="p-3 px-5 bg-dark"> -->
   <div class="p-3 px-5">
     @foreach ($carsDB as $c)
-      <p>{{ $c->carType }} {{ $c->price}}</p>
+      <p class = " bg-white">{{ $c->carMake }} {{ $c->price}}</p>
     @endforeach
   </div>
 

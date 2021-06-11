@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Car;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CarController extends Controller
 {
@@ -26,6 +27,7 @@ class CarController extends Controller
         //
     }
 
+
     /**
      * Store a newly created resource in storage.
      *
@@ -34,7 +36,19 @@ class CarController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $car = new Car();
+        $car->carMake = $request->carMake;
+        $car->carModel =  auth()->user()->name;
+        $car->PhoneNumber = $request->PhoneNumber;
+        $car->price = $request->price;
+        $car->username = auth()->user()->id;
+        $car->documents = auth()->user()->name;
+        $car->description = $request->description;
+        $car->carArea = $request->carArea;
+        $car->photo = $request->photo;
+        $car->save();
+
+        return view('home'); 
     }
 
     /**
