@@ -3,9 +3,6 @@
     Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
 -->
   <div class="logo">
-    <p  class="simple-text logo-mini">
-      {{ __('CT') }}
-    </p>
     <p class="simple-text logo-normal">
       {{ __('Elizaveta Sirotina') }}
     </p>
@@ -31,9 +28,9 @@
         </a>
       </li>
       <li class="@if ($activePage == 'myCars') active @endif">
-        <a href="{{ route('page.index','myCars') }}">
+        <a href="{{ route('myCars') }}">
           <i class="now-ui-icons design_bullet-list-67"></i>
-          <p> {{ __("Your cars") }} </p>
+          <p> {{ __("My cars") }} </p>
         </a>
       </li>
 
@@ -72,8 +69,8 @@
           <i class="now-ui-icons location_map-big"></i>
           <p>{{ __('Maps') }}</p>
         </a>
-      </li>
-      <li class = " @if ($activePage == 'notifications') active @endif">
+      </li> -->
+      <!--<li class = " @if ($activePage == 'notifications') active @endif">
         <a href="{{ route('page.index','notifications') }}">
           <i class="now-ui-icons ui-1_bell-53"></i>
           <p>{{ __('Notifications') }}</p>

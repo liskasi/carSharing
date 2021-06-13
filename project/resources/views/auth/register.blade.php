@@ -13,12 +13,15 @@
             <div class="card-header ">
               <h4 class="card-title">{{ __('Register') }}</h4>
               <div class="social">
-                <button class="btn btn-icon btn-round btn-google">
+              <a href="{{route('login.google')}}" role="button" class="btn btn-icon btn-round btn-google" style="padding: 10px;padding-left: 10px;padding-right: 10px;text-decoration: none;border-radius: 20px;"><i class="fab fa-google" ></i></a>
+              <a href="{{route('login.facebook')}}" role="button" class="btn btn-icon btn-round btn-facebook" style="padding: 10px;padding-left: 10px;padding-right: 10px;text-decoration: none;border-radius: 20px;"><i class="fab fa-facebook-f"></i></a>
+
+                <!-- <button class="btn btn-icon btn-round btn-google">
                   <i class="fab fa-google"></i>
                 </button>
                 <button class="btn btn-icon btn-round btn-facebook">
                   <i class="fab fa-facebook-f"></i>
-                </button>
+                </button> -->
                 <h5 class="card-description">  {{ __('or be classical') }}</h5>
               </div>
             </div>

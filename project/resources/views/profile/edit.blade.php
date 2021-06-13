@@ -105,17 +105,6 @@
             </div>
           </div>
           <hr>
-          <div class="button-container">
-            <button href="#" class="btn btn-neutral btn-icon btn-round btn-lg">
-              <i class="fab fa-facebook-square"></i>
-            </button>
-            <button href="#" class="btn btn-neutral btn-icon btn-round btn-lg">
-              <i class="fab fa-twitter"></i>
-            </button>
-            <button href="#" class="btn btn-neutral btn-icon btn-round btn-lg">
-              <i class="fab fa-google-plus-square"></i>
-            </button>
-          </div>
         </div>
       </div>
     </div>

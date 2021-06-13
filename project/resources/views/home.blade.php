@@ -1,4 +1,8 @@
-@extends('layouts.app', [
+<?php 
+use Illuminate\Support\Facades\Storage;
+?>
+
+@extends('layouts.app',[
     'namePage' => 'Dashboard',
     'class' => 'login-page sidebar-mini ',
     'activePage' => 'home',
@@ -6,12 +10,15 @@
 ])
 
 @section('content')
-  <div class="panel-header panel-header-default">
     <!-- <canvas id="bigDashboardChart"></canvas> -->
-    <form>
-      <div class="container container-table p-4">
+    <form  method="POST"  action="{{route('car.filter') }}">
+    <!-- <form  method="post"  action="{{ action([App\Http\Controllers\CarController::class, 'filter']) }}"> -->
+    @csrf
+    <div class="panel-header panel-header-default">
+      <h3 class="text-center text-light" style="margin:0;padding-bottom: 10px;">Find a Car</h3>
+      <div class="container container-table ">
           <span class="input-group no-border  center w-75" style="margin:0 auto;">
-              <input type="text" value="" class="form-control input-lg" placeholder="Search...">
+              <input type="text" name="seacrh" id="seacrh" value="" class="form-control input-lg" placeholder="Search..."  value="{{old('seacrh')}}">
               <div class="input-group-append">
                 <div class="input-group-text">
                   <i class="now-ui-icons ui-1_zoom-bold"></i>
@@ -19,278 +26,95 @@
             </div>
           </span>
       </div>
-      </form>
   </div>
-  <!-- <div class="p-3 px-5 bg-dark"> -->
-  <div class="p-3 px-5">
+  <div style=" width:100%; min-height: 100vh;">
+    <div class="p-2" style="display: inline-block; *display: inline; height: 41%; vertical-align: top; width: 15%; background: #98BF64; border-top-right-radius: 15px; border-bottom-right-radius: 15px;">
+    <div class="form-group">
+        <label for="carMake" class="text-light">Car make</label>
+        <input type="text" name="carMake" class="form-control  bg-light" id="carMake" aria-describedby="carMake" placeholder="Enter a car make..." value="{{old('carMake')}}">
+    </div>
+    <div class="form-group">
+        <label for="carModel" class="text-light">Car model</label>
+        <input type="text" name="carModel" class="form-control  bg-light" id="carModel" aria-describedby="carModel" placeholder="Enter a car model..." value="{{old('carModel')}}">
+    </div>
+    <div class="form-group">
+        <label for="price" class="text-light">Price</label>
+        <input type="text" name="price" class="form-control  bg-light" id="price" aria-describedby="price" placeholder="Enter a price..." value="{{old('price')}}">
+    </div>
+    <div class="form-group">
+        <label for="carArea" class="text-light">Car area</label>
+        <input type="text"  name="carArea" class="form-control  bg-light" id="carArea" aria-describedby="carArea" placeholder="Where is your car located?" value="{{old('carArea')}}">
+    </div>
+    <div >
+      <button type="submit" class="btn btn-primary btn-round">{{__('Apply filters')}}</button>
+    </div>
+
+    </div>
+
+  </form>
+
+    <div style="display: inline-block; *display: inline; zoom: 1; vertical-align: top; width: 50%; margin-left: 10%; border-radius: 25px;">
+    <div class="dropdown pull-right">
+    <button class="btn btn-secondary dropdown-toggle  " type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Sort by:
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+      <button class="dropdown-item" type="button">Price ascending</button>
+      <button class="dropdown-item" type="button">Price descending</button>
+      <button class="dropdown-item" type="button">Name A-Z</button>
+      <button class="dropdown-item" type="button">Name Z-A</button>
+    </div>
+  </div>
+    <div class="bg-light"  style=" border-radius: 25px; padding: 2%; margin-top: 60px;">
     @foreach ($carsDB as $c)
-      <p class = " bg-white">{{ $c->carMake }} {{ $c->price}}</p>
-    @endforeach
+      <div class="p-2 m-2" style="height: 250px; border-radius: 15px; background:#D3D3D3;">
+        <div style="display: inline-block; *display: inline; vertical-align: top; ">
+        {{ $c->photo }}
+        </div>
+        <div style="display: inline-block; *display: inline;">
+        <div>
+        <a href="{{ url('car', $c->id) }}">{{ $c->carMake }}, {{ $c->carModel}}</a>
+        </div>
+        <div>
+          {{ $c->price}} euro per minute
+        </div>
+        <div>
+          Location: {{ $c->carArea}}
+        </div>
+         <?php if(auth()->user()->id == 1)
+          { ?>
+            <div>
+              {{$c->status}}
+            </div>
+            <form method="POST" action="{{ action([App\Http\Controllers\CarController::class, 'status']) }}">
+            @csrf
+            <?php if($c->status == "Under consideration") { ?>
+                <input type="hidden" name="id" value="{{ $c->id }}" />
+                <button name="status" value="Approve">Approve</button>
+                <button name="status" value="Reject">Reject</button>
+                <?php } ?>
+
+                <?php if($c->status == "Approved") { ?>
+                <input type="hidden" name="id" value="{{ $c->id }}" />
+                <button>Delete</button>
+                <?php } ?>
+            </form>
+         <?php } ?>
+
+        </div>
+      </div>
+      @endforeach
+
+  </div>
+    </div>
   </div>
 
-  <!-- <div class="content"> 
-    <div class="row">
-      <div class="col-lg-4">
-        <div class="card card-chart">
-          <div class="card-header">
-            <h5 class="card-category">Global Sales</h5>
-            <h4 class="card-title">Shipped Products</h4>
-            <div class="dropdown">
-              <button type="button" class="btn btn-round btn-outline-default dropdown-toggle btn-simple btn-icon no-caret" data-toggle="dropdown">
-                <i class="now-ui-icons loader_gear"></i>
-              </button>
-              <div class="dropdown-menu dropdown-menu-right">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-                <a class="dropdown-item text-danger" href="#">Remove Data</a>
-              </div>
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="chart-area">
-              <canvas id="lineChartExample"></canvas>
-            </div>
-          </div>
-          <div class="card-footer">
-            <div class="stats">
-              <i class="now-ui-icons arrows-1_refresh-69"></i> Just Updated
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-4 col-md-6">
-        <div class="card card-chart">
-          <div class="card-header">
-            <h5 class="card-category">2018 Sales</h5>
-            <h4 class="card-title">All products</h4>
-            <div class="dropdown">
-              <button type="button" class="btn btn-round btn-outline-default dropdown-toggle btn-simple btn-icon no-caret" data-toggle="dropdown">
-                <i class="now-ui-icons loader_gear"></i>
-              </button>
-              <div class="dropdown-menu dropdown-menu-right">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-                <a class="dropdown-item text-danger" href="#">Remove Data</a>
-              </div>
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="chart-area">
-              <canvas id="lineChartExampleWithNumbersAndGrid"></canvas>
-            </div>
-          </div>
-          <div class="card-footer">
-            <div class="stats">
-              <i class="now-ui-icons arrows-1_refresh-69"></i> Just Updated
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-4 col-md-6">
-        <div class="card card-chart">
-          <div class="card-header">
-            <h5 class="card-category">Email Statistics</h5>
-            <h4 class="card-title">24 Hours Performance</h4>
-          </div>
-          <div class="card-body">
-            <div class="chart-area">
-              <canvas id="barChartSimpleGradientsNumbers"></canvas>
-            </div>
-          </div>
-          <div class="card-footer">
-            <div class="stats">
-              <i class="now-ui-icons ui-2_time-alarm"></i> Last 7 days
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="card  card-tasks">
-          <div class="card-header ">
-            <h5 class="card-category">Backend development</h5>
-            <h4 class="card-title">Tasks</h4>
-          </div>
-          <div class="card-body ">
-            <div class="table-full-width table-responsive">
-              <table class="table">
-                <tbody>
-                  <tr>
-                    <td>
-                      <div class="form-check">
-                        <label class="form-check-label">
-                          <input class="form-check-input" type="checkbox" checked>
-                          <span class="form-check-sign"></span>
-                        </label>
-                      </div>
-                    </td>
-                    <td class="text-left">Sign contract for "What are conference organizers afraid of?"</td>
-                    <td class="td-actions text-right">
-                      <button type="button" rel="tooltip" title="" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Edit Task">
-                        <i class="now-ui-icons ui-2_settings-90"></i>
-                      </button>
-                      <button type="button" rel="tooltip" title="" class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
-                        <i class="now-ui-icons ui-1_simple-remove"></i>
-                      </button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="form-check">
-                        <label class="form-check-label">
-                          <input class="form-check-input" type="checkbox">
-                          <span class="form-check-sign"></span>
-                        </label>
-                      </div>
-                    </td>
-                    <td class="text-left">Lines From Great Russian Literature? Or E-mails From My Boss?</td>
-                    <td class="td-actions text-right">
-                      <button type="button" rel="tooltip" title="" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Edit Task">
-                        <i class="now-ui-icons ui-2_settings-90"></i>
-                      </button>
-                      <button type="button" rel="tooltip" title="" class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
-                        <i class="now-ui-icons ui-1_simple-remove"></i>
-                      </button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="form-check">
-                        <label class="form-check-label">
-                          <input class="form-check-input" type="checkbox" checked>
-                          <span class="form-check-sign"></span>
-                        </label>
-                      </div>
-                    </td>
-                    <td class="text-left">Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit
-                    </td>
-                    <td class="td-actions text-right">
-                      <button type="button" rel="tooltip" title="" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Edit Task">
-                        <i class="now-ui-icons ui-2_settings-90"></i>
-                      </button>
-                      <button type="button" rel="tooltip" title="" class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
-                        <i class="now-ui-icons ui-1_simple-remove"></i>
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div class="card-footer ">
-            <hr>
-            <div class="stats">
-              <i class="now-ui-icons loader_refresh spin"></i> Updated 3 minutes ago
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-header">
-            <h5 class="card-category">All Persons List</h5>
-            <h4 class="card-title"> Employees Stats</h4>
-          </div>
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table">
-                <thead class=" text-primary">
-                  <th>
-                    Name
-                  </th>
-                  <th>
-                    Country
-                  </th>
-                  <th>
-                    City
-                  </th>
-                  <th class="text-right">
-                    Salary
-                  </th>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                      Dakota Rice
-                    </td>
-                    <td>
-                      Niger
-                    </td>
-                    <td>
-                      Oud-Turnhout
-                    </td>
-                    <td class="text-right">
-                      $36,738
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      Minerva Hooper
-                    </td>
-                    <td>
-                      Curaçao
-                    </td>
-                    <td>
-                      Sinaai-Waas
-                    </td>
-                    <td class="text-right">
-                      $23,789
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      Sage Rodriguez
-                    </td>
-                    <td>
-                      Netherlands
-                    </td>
-                    <td>
-                      Baileux
-                    </td>
-                    <td class="text-right">
-                      $56,142
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      Doris Greene
-                    </td>
-                    <td>
-                      Malawi
-                    </td>
-                    <td>
-                      Feldkirchen in Kärnten
-                    </td>
-                    <td class="text-right">
-                      $63,542
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      Mason Porter
-                    </td>
-                    <td>
-                      Chile
-                    </td>
-                    <td>
-                      Gloucester
-                    </td>
-                    <td class="text-right">
-                      $78,615
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div> -->
+
 @endsection
+
+
+
+
 
 @push('js')
   <script>

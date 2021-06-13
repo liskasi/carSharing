@@ -12,7 +12,7 @@
     <div class="collapse navbar-collapse justify-content-end" id="navigation">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a href="{{ route('login') }}" class="nav-link">
+          <a href="{{ route('homeguest') }}" class="nav-link">
             <i class="now-ui-icons design_app"></i> {{ __("Search for a car") }}
           </a>
         </li>

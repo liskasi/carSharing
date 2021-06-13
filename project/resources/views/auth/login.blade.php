@@ -1,9 +1,9 @@
 @extends('layouts.app', [
-    'namePage' => 'Login page',
-    'class' => 'login-page sidebar-mini ',
+    'namePage' => 'Login',
     'activePage' => 'login',
-    'backgroundImage' => asset('assets') . "/img/bg14.jpg",
+    'backgroundImage' => asset('assets') . "/img/bg16.jpg",
 ])
+
 
 @section('content')
     <div class="content">
@@ -41,7 +41,7 @@
                         <i class="now-ui-icons users_circle-08"></i>
                     </div>
                     </span>
-                    <input class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Email') }}" type="email" name="email" value="{{ old('email', 'admin@nowui.com') }}" required autofocus>
+                    <input class="text-light form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Email') }}" type="email" name="email" required autofocus>
                 </div>
                 @if ($errors->has('email'))
                     <span class="invalid-feedback" style="display: block;" role="alert">
@@ -54,7 +54,7 @@
                         <i class="now-ui-icons objects_key-25"></i></i>
                     </div>
                     </div>
-                    <input placeholder="Password" class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" placeholder="{{ __('Password') }}" type="password" value="secret" required>
+                    <input placeholder="Password" class="text-light form-control {{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" placeholder="{{ __('Password') }}" type="password"  required>
                 </div>
                 @if ($errors->has('password'))
                     <span class="invalid-feedback" style="display: block;" role="alert">
@@ -69,11 +69,11 @@
                     <a href="{{ route('register') }}" class="link footer-link">{{ __('Create Account') }}</a>
                     </h6>
                 </div>
-                <div class="pull-right">
+                <!-- <div class="pull-right">
                     <h6>
                     <a href="{{ route('password.request') }}" class="link footer-link">{{ __('Forgot Password?') }}</a>
                     </h6>                
-                </div>
+                </div> -->
                 </div>
             </div>
             </form>
