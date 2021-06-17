@@ -53,5 +53,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Car::class);
     }  
+    public function rentedCar()
+    {
+        return $this->morphToMany(rentedCar::class, 'taggable');
+    }  
+
 
 }

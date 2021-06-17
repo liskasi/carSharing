@@ -14,7 +14,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        //$this->middleware('auth');
+        $this->middleware('auth');
     }
 
     /**
@@ -24,7 +24,20 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $carsDB = DB::table('cars')->get();
-        return view('home', ['carsDB' => $carsDB]);
+        if (auth()->user()->id == 1)
+        {
+            $carsDB = DB::table('cars')->get();
+        }
+        else
+        {
+            $carsDB = DB::table('cars')->where('status','=','Approved')->get();
+        }
+        $a = DB::table('cars')->where('status','=','Approved')->count();
+        return view ('home', ['carsDB' => $carsDB, 'a'=>$a]);
+
+    }
+        
+    public function languageDemo(){
+        return view('languageDemo');
     }
 }

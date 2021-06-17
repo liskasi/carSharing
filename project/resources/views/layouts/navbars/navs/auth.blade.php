@@ -28,19 +28,8 @@
         </div>
       </form> -->
       <ul class="navbar-nav">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="now-ui-icons location_world"></i>
-            <p>
-              <span class="d-lg-none d-md-block">{{ __("Some Actions") }}</span>
-            </p>
-          </a>
-          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="#">{{ __("Action") }}</a>
-            <a class="dropdown-item" href="#">{{ __("Another action") }}</a>
-            <a class="dropdown-item" href="#">{{ __("Something else here") }}</a>
-          </div>
-        </li>
+        
+
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="now-ui-icons users_single-02"></i>
@@ -58,6 +47,26 @@
             </a>
           </div>
         </li>
+        <li class="nav-item dropdown">
+        <language-switcher></language-switcher>
+        </li>
+
+
+        <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="now-ui-icons location_world"></i> {{ Config::get('languages')[App::getLocale()] }}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+        @if(Config::get('languages'))
+          @foreach (Config::get('languages') as $lang => $language)
+              @if ($lang != App::getLocale())
+                      <a class="dropdown-item" href="{{ route('lang.switch', $lang) }}"> {{$language}}</a>
+              @endif
+          @endforeach
+        @endif
+        </div>
+        </li>
+
       </ul>
     </div>
   </div>

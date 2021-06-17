@@ -95,7 +95,7 @@
           </div>
           <div class="card-body">
             <div class="author">
-              <a href="#">
+              <a href="{{ url('viewuser', auth()->user()->id) }}">
                 <img class="avatar border-gray" src="{{asset('assets')}}/img/default-avatar.png" alt="...">
                 <h5 class="title">{{ auth()->user()->name }}</h5>
               </a>

@@ -36,7 +36,7 @@
     </div>
     <div class="form-group">
         <label for="PhoneNumber">Contact information</label>
-        <input type="text" value="{{ old('PhoneNumber') }}" name="PhoneNumber" class="form-control w-50 bg-light" id="PhoneNumber" aria-describedby="PhoneNumber" placeholder="+371 ...">
+        <input type="text" value="{{ old('PhoneNumber') }}" name="PhoneNumber" class="form-control w-50 bg-light" id="PhoneNumber" aria-describedby="PhoneNumber" placeholder="(without +371)">
         <small id="PhoneNumber" class="form-text text-muted">Enter a phone number. It will be visible only for authorized users.</small>
         @if ($errors->has('PhoneNumber'))
             <span class="invalid-feedback" style="display: block;" role="alert">
@@ -47,7 +47,7 @@
     <div class="form-group">
         <label for="price">Price</label>
         <input type="text" name="price" value="{{old('price') }}" class="form-control w-50 bg-light" id="price" aria-describedby="price" placeholder="Enter a price...">
-        <small id="PhoneNumber" class="form-text text-muted">(euro per hour)</small>
+        <small id="PhoneNumber" class="form-text text-muted">(euro per day)</small>
         @if ($errors->has('price'))
             <span class="invalid-feedback" style="display: block;" role="alert">
             <strong>{{ $errors->first('price') }}</strong>
@@ -56,7 +56,7 @@
     </div>
     <div class="form-group">
         <label for="description">Desciption</label>
-        <textarea type="text" name="description" value="{{old('description')}}" class="form-control w-50 bg-light" id="description" aria-describedby="description" placeholder="Write some desciption..." style="border-radius: 1rem;"></textarea>
+        <textarea type="text" name="description" class="form-control w-50 bg-light" id="description" aria-describedby="description" placeholder="Write some desciption..." style="border-radius: 1rem;">{{old('description') }}</textarea>
         @if ($errors->has('description'))
             <span class="invalid-feedback" style="display: block;" role="alert">
             <strong>{{ $errors->first('description') }}</strong>
@@ -73,6 +73,16 @@
         @endif
     </div>
     <div>
+        <label class="form-label" for="documents">Add a documents</label>
+        <input type="file" name="documents" value="{{old('photo')}}" class="form-control w-50 bg-light" id="documents" />
+        <small id="documents" class="form-text text-muted">Documents will be hidden from users. They are needed to approve your application.</small>
+        @if ($errors->has('documents'))
+            <span class="invalid-feedback" style="display: block;" role="alert">
+            <strong>{{ $errors->first('documents') }}</strong>
+            </span>
+        @endif
+    </div>
+    <div>
         <label class="form-label" for="photo">Add a photo</label>
         <input type="file" name="photo" value="{{old('photo')}}" class="form-control w-50 bg-light" id="photo" />
         @if ($errors->has('photo'))
@@ -80,7 +90,6 @@
             <strong>{{ $errors->first('photo') }}</strong>
             </span>
         @endif
-
     </div>
     <button type="submit" class="btn btn-info btn-round">{{__('Add a car')}}</button>
 </form>

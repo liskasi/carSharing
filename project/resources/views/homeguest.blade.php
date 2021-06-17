@@ -79,17 +79,17 @@
       <h3 class="text-center text-light" style="margin:0;padding-bottom: 10px;">Find a Car</h3>
       <div class="container container-table ">
           <span class="input-group no-border  center w-75" style="margin:0 auto;">
-              <input type="text" name="seacrh" id="seacrh" value="" class="form-control input-lg" placeholder="Search..."  value="{{old('seacrh')}}">
+              <input type="text" name="search" id="search" class="form-control input-lg" placeholder="Search..."  value="{{old('seacrh')}}">
               <div class="input-group-append">
                 <div class="input-group-text">
-                  <i class="now-ui-icons ui-1_zoom-bold"></i>
+                <button type="submit"  style="background: none;	color: inherit;	border: none;	padding: 0;	font: inherit; cursor: pointer;	outline: inherit;"> <i class="now-ui-icons ui-1_zoom-bold"></i> </button>
                 </div>
             </div>
           </span>
       </div>
   </div>
-  <div style="height: 100%; width:100%;">
-    <div class="p-2" style="display: inline-block; *display: inline; zoom: 1; height: 41%; vertical-align: top; width: 15%; background: #98BF64; border-top-right-radius: 15px; border-bottom-right-radius: 15px;">
+  <div style=" width:100%; min-height: 100vh;">
+    <div class="p-2" style="display: inline-block; *display: inline; height: 41%; vertical-align: top; width: 15%; background: #98BF64; border-top-right-radius: 15px; border-bottom-right-radius: 15px;">
     <div class="form-group">
         <label for="carMake" class="text-light">Car make</label>
         <input type="text" name="carMake" class="form-control  bg-light" id="carMake" aria-describedby="carMake" placeholder="Enter a car make..." value="{{old('carMake')}}">
@@ -99,38 +99,46 @@
         <input type="text" name="carModel" class="form-control  bg-light" id="carModel" aria-describedby="carModel" placeholder="Enter a car model..." value="{{old('carModel')}}">
     </div>
     <div class="form-group">
-        <label for="price" class="text-light">Price</label>
-        <input type="text" name="price" class="form-control  bg-light" id="price" aria-describedby="price" placeholder="Enter a price..." value="{{old('price')}}">
+        <label for="price" style="width:100%;"class="text-light">Price range</label>
+        <input type="numeric" name="priceFrom" class="form-control  bg-light" id="priceFrom" aria-describedby="price" placeholder="From" style="width:40%; display: inline-block;"> <span class="text-light">- </span>
+        <input type="numeric" name="priceTo" class="form-control  bg-light" id="priceTo" aria-describedby="price" placeholder="To" style="width:40%; display: inline-block;">
     </div>
     <div class="form-group">
         <label for="carArea" class="text-light">Car area</label>
-        <input type="text"  name="carArea" class="form-control  bg-light" id="carArea" aria-describedby="carArea" placeholder="Where is your car located?" value="{{old('carArea')}}">
+        <input type="text"  name="carArea" class="form-control  bg-light" id="carArea" aria-describedby="carArea" placeholder="Enter a location..." value="{{old('carArea')}}">
     </div>
     <div >
-      <button type="submit" class="btn btn-primary btn-round">{{__('Apply filters')}}</button>
+      <button type="submit" id ="submitFilter" class="btn btn-primary btn-round">{{__('Apply Filter')}}</button>
     </div>
 
     </div>
   </form>
 
-    <div class="bg-light"style="display: inline-block; *display: inline; zoom: 1; vertical-align: top; width: 50%; margin-left: 10%; border-radius: 25px;">
+    <div style="display: inline-block; *display: inline;border-radius: 5px; padding: 2%; zoom: 1; vertical-align: top; width: 50%; margin-left: 10%; border-radius: 25px;">
     @foreach ($carsDB as $c)
-      <div class="p-2 m-3" style="height: 250px; border-radius: 15px; background:#D3D3D3;">
-        <div style="display: inline-block; *display: inline; vertical-align: top; ">
-        {{ $c->photo }}
+    <div class="p-2 mb-2 border bg-light" style="height: 250px; border-radius: 5px;">
+        <div style="display: inline-block; *display: inline;  height:100%; width:50%;">
+          <div style="vertical-align: center; display:flex;justify-content: center;align-items: center;height:100%;">
+            <img src="{{asset('/storage/images/'.$c->photo)}}" style="height: 200px;"/>
+          </div>
         </div>
-        <div style="display: inline-block; *display: inline;">
-        <div>
-          {{ $c->carMake }}, {{ $c->carModel}}
+        <div style="display: inline-block; *display: inline; vertical-align: top; padding-top: 3%;">
+        <div style="padding-bottom: 8%; font-size: 120%;">
+        <p><b>{{ $c->carMake }}, {{ $c->carModel}}</b></p>
         </div>
         <div>
-          {{ $c->price}} euro per minute
+          {{ $c->price}} euro per day
         </div>
         <div>
           Location: {{ $c->carArea}}
         </div>
-         <div>
-         </div>
+        <?php
+
+        if($c->ifRented =="yes") {  
+        ?>
+          <div>RENTED</div>
+        <?php }?>
+
         </div>
       </div>
       @endforeach

@@ -20,12 +20,13 @@ class CreateCarsTable extends Migration
             $table->string('carModel');
             $table->string('PhoneNumber');
             $table->string('price');
-            $table->foreignId('username');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');;
             $table->string('documents');
             $table->string('description');
             $table->string('carArea');
             $table->string('photo');
-            $table->string('status')->default('Under consideration');;
+            $table->string('ifRented')->default('no');
+            $table->string('status')->default('Under consideration');
         });
     }
 

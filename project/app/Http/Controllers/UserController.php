@@ -18,4 +18,18 @@ class UserController extends Controller
     {
         return view('users.index', ['users' => $model->paginate(15)]);
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+     public function show($id)
+    {
+        $user = User::findOrFail($id);
+        //return redirect('viewuser');
+        return view('pages.viewuser', compact('user'));
+    }
+
 }

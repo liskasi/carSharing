@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
   <meta charset="utf-8" />
@@ -22,6 +22,7 @@
 </head>
 
 <body class="{{ $class ?? '' }}">
+
     @auth
       @include('layouts.page_template.auth')
     @endauth

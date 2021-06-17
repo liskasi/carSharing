@@ -28,11 +28,35 @@
         </a>
       </li>
       <li class="@if ($activePage == 'myCars') active @endif">
-        <a href="{{ route('myCars') }}">
+        <a href="{{ route('page.index','mycar') }}">
           <i class="now-ui-icons design_bullet-list-67"></i>
           <p> {{ __("My cars") }} </p>
         </a>
       </li>
+      <li>
+        <?php if(auth()->user()->id == 1)
+        { ?>
+          <li class="@if ($activePage == 'allUsers') active @endif">
+            <a href="{{ route('viewusers') }}">
+              <i class="now-ui-icons design_bullet-list-67"></i>
+              <p> {{ __("All users") }} </p>
+            </a>
+          </li>
+        <?php } ?>
+      </li>
+      <!-- <li class="@if ($activePage == 'fav') active @endif">
+        <a href="{{ route('fav') }}">
+          <i class="now-ui-icons ui-2_favourite-28"></i>
+          <p> {{ __("My favourites") }} </p>
+        </a>
+      </li> -->
+      <li class="@if ($activePage == 'rented') active @endif">
+        <a href="{{ route('page.index','rented') }}">
+          <i class="now-ui-icons shopping_basket"></i>
+          <p> {{ __("Rented") }} </p>
+        </a>
+      </li>
+
 
       <!-- <li>
         <a data-toggle="collapse" href="#laravelExamples">
